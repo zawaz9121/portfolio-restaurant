@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>熟成和牛 炎 -HOMURA-｜グランドオープン記念 全品30%OFF</title>
+    <meta name="description" content="A5ランク黒毛和牛を最高の状態でご提供。グランドオープン記念キャンペーン実施中。駅徒歩2分、完全個室完備。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --dark: #1a1a1a;
+            --dark-card: #141414;
+            --red: #c41e3a;
+            --red-dark: #8b1a2b;
+            --red-light: #e85d75;
+            --gold: #c9a96e;
+            --gold-light: #e0c992;
+            --gold-dim: rgba(201,169,110,0.3);
+            --cream: #f5f0e6;
+            --white: #ffffff;
+            --text-light: rgba(255,255,255,0.7);
+            --text-dim: rgba(255,255,255,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            color: var(--white);
+            background: var(--black);
+            line-height: 1.8;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        /* ===== FLOATING CTA ===== */
+        .floating-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-top: 1px solid rgba(201,169,110,0.2);
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+        .floating-cta.visible { transform: translateY(0); }
+        .floating-cta a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .floating-cta .btn-red {
+            background: var(--red);
+            color: white;
+        }
+        .floating-cta .btn-gold {
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1010 50%, #0a0a0a 100%);
+            overflow: hidden;
+            text-align: center;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center 30%, rgba(196,30,58,0.08) 0%, transparent 60%);
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            border: 1px solid rgba(201,169,110,0.06);
+        }
+
+        .hero-deco-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, var(--gold-dim));
+        }
+        .hero-deco-line.bottom {
+            top: auto;
+            bottom: 0;
+            background: linear-gradient(to top, transparent, var(--gold-dim));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 80px 20px;
+        }
+
+        .hero-campaign-badge {
+            display: inline-block;
+            border: 1px solid var(--red);
+            background: rgba(196,30,58,0.15);
+            color: var(--red-light);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            padding: 8px 28px;
+            margin-bottom: 32px;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .hero-jp-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(14px, 2vw, 18px);
+            font-weight: 400;
+            letter-spacing: 8px;
+            color: var(--gold);
+            margin-bottom: 12px;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero h1 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 800;
+            letter-spacing: 12px;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            animation: fadeInUp 0.8s ease 0.35s forwards;
+            opacity: 0;
+        }
+        .hero h1 .red { color: var(--red-light); }
+
+        .hero-en {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(12px, 1.5vw, 16px);
+            letter-spacing: 6px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease 0.5s forwards;
+            opacity: 0;
+        }
+
+        .hero-offer {
+            display: inline-block;
+            background: var(--red);
+            padding: 20px 48px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.65s forwards;
+            opacity: 0;
+        }
+        .hero-offer .offer-label {
+            font-size: 13px;
+            letter-spacing: 3px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+        .hero-offer .offer-value {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .hero-offer .offer-value small {
+            font-size: 0.5em;
+            font-weight: 400;
+        }
+
+        .hero-note {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease 0.8s forwards;
+            opacity: 0;
+        }
+
+        .hero-cta {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.95s forwards;
+            opacity: 0;
+        }
+        .hero-cta a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 40px;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-red-fill {
+            background: var(--red);
+            color: white;
+        }
+        .btn-red-fill:hover {
+            background: var(--red-dark);
+            transform: translateY(-2px);
+        }
+        .btn-gold-outline {
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+        .btn-gold-outline:hover {
+            background: rgba(201,169,110,0.1);
+        }
+
+        /* ===== SECTION COMMON ===== */
+        .section {
+            padding: 100px 20px;
+            position: relative;
+        }
+        .section-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .section-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            letter-spacing: 5px;
+            color: var(--gold);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(24px, 3.5vw, 36px);
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.5;
+            letter-spacing: 2px;
+        }
+        .section-desc {
+            color: var(--text-light);
+            font-size: 15px;
+            margin-bottom: 50px;
+            max-width: 600px;
+        }
+        .centered { text-align: center; }
+        .centered .section-desc { margin-left: auto; margin-right: auto; }
+
+        .gold-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+            margin: 0 auto 60px;
+        }
+
+        /* ===== CONCEPT ===== */
+        .concept {
+            background: linear-gradient(180deg, var(--black) 0%, #0f0808 50%, var(--black) 100%);
+        }
+        .concept-text {
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .concept-text .lead {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(18px, 3vw, 26px);
+            font-weight: 500;
+            line-height: 2;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+        .concept-text p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 2;
+        }
+
+        /* ===== MENU ===== */
+        .menu-section {
+            background: var(--dark);
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .menu-card {
+            background: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 0;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .menu-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--gold-dim);
+        }
+        .menu-img {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #1a1010, #2a1515);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            position: relative;
+        }
+        .menu-img .menu-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--red);
+            color: white;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 4px 12px;
+            letter-spacing: 1px;
+        }
+        .menu-body {
+            padding: 24px;
+        }
+        .menu-body h3 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .menu-body p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+        .menu-price {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .menu-price .original {
+            font-size: 14px;
+            color: var(--text-dim);
+            text-decoration: line-through;
+        }
+        .menu-price .sale {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--red-light);
+        }
+        .menu-price .sale small {
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* ===== FEATURES ===== */
+        .features-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        .feat-card {
+            text-align: center;
+            padding: 40px 24px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+            transition: all 0.3s ease;
+        }
+        .feat-card:hover {
+            border-color: var(--gold-dim);
+            background: rgba(201,169,110,0.03);
+        }
+        .feat-icon {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .feat-card h3 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .feat-card p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* ===== CAMPAIGN DETAIL ===== */
+        .campaign-detail {
+            background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 100%);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .campaign-detail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2l2 3-2 3zm0-3V20h20v2H20v2l-2-3 2-3z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .campaign-detail .cd-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .campaign-detail .cd-label {
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 6px 24px;
+            font-size: 13px;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        .campaign-detail h2 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: clamp(24px, 4vw, 40px);
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+        .campaign-detail .cd-period {
+            font-size: 15px;
+            opacity: 0.8;
+            margin-bottom: 24px;
+        }
+        .campaign-benefits {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+        .campaign-benefits span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            background: rgba(255,255,255,0.15);
+            padding: 12px 24px;
+        }
+        .campaign-detail .btn-white {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: var(--red);
+            padding: 18px 40px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .campaign-detail .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        /* ===== SHOP INFO ===== */
+        .shop-info {
+            background: var(--dark);
+        }
+        .info-table {
+            max-width: 600px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .info-table tr {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .info-table th {
+            font-weight: 500;
+            color: var(--gold);
+            font-size: 14px;
+            padding: 16px 20px;
+            text-align: left;
+            width: 120px;
+            vertical-align: top;
+        }
+        .info-table td {
+            font-size: 14px;
+            color: var(--text-light);
+            padding: 16px 20px;
+        }
+
+        .map-placeholder {
+            max-width: 600px;
+            margin: 40px auto 0;
+            height: 200px;
+            background: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
+        /* ===== FAQ ===== */
+        .faq-list {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 24px 0;
+        }
+        .faq-q {
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        .faq-q::after {
+            content: '+';
+            font-size: 24px;
+            color: var(--gold);
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .faq-item.open .faq-q::after { transform: rotate(45deg); }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        .faq-item.open .faq-a {
+            max-height: 200px;
+            padding-top: 16px;
+        }
+
+        /* ===== FINAL CTA ===== */
+        .final-cta {
+            background: linear-gradient(180deg, var(--black) 0%, #0f0808 100%);
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(196,30,58,0.06) 0%, transparent 60%);
+        }
+        .final-cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        .final-cta-buttons a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 40px;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark);
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 12px;
+            color: var(--text-dim);
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        footer .logo {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 6px;
+            margin-bottom: 8px;
+        }
+        footer .links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 16px 0;
+        }
+        footer a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero-content { padding: 100px 20px 60px; }
+            .hero h1 { letter-spacing: 6px; }
+            .hero-cta { flex-direction: column; align-items: center; }
+            .hero-cta a { width: 100%; max-width: 320px; justify-content: center; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .features-row { grid-template-columns: 1fr; }
+            .campaign-benefits { flex-direction: column; align-items: center; }
+            .section { padding: 70px 20px; }
+            .info-table th { width: 90px; padding: 12px 8px; }
+            .info-table td { padding: 12px 8px; }
+            .floating-cta a { padding: 12px 20px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta" id="floatingCta">
+    <a href="#reserve" class="btn-red">今すぐ予約する</a>
+    <a href="tel:03-0000-0000" class="btn-gold">☎ 電話予約</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-deco-line"></div>
+    <div class="hero-deco-line bottom"></div>
+    <div class="hero-content">
+        <div class="hero-campaign-badge">GRAND OPEN CAMPAIGN</div>
+        <p class="hero-jp-title">熟成和牛専門</p>
+        <h1>炎 <span class="red">-HOMURA-</span></h1>
+        <p class="hero-en">PREMIUM AGED WAGYU YAKINIKU</p>
+
+        <div class="hero-offer">
+            <div class="offer-label">グランドオープン記念</div>
+            <div class="offer-value">全品30<small>%</small>OFF</div>
+        </div>
+        <p class="hero-note">2026年3月1日〜3月31日 期間限定</p>
+
+        <div class="hero-cta">
+            <a href="#reserve" class="btn-red-fill">予約する →</a>
+            <a href="#menu" class="btn-gold-outline">メニューを見る</a>
+        </div>
+    </div>
+</section>
+
+<!-- CONCEPT -->
+<section class="section concept centered">
+    <div class="section-inner">
+        <span class="section-label">Concept</span>
+        <div class="gold-divider"></div>
+        <div class="concept-text reveal">
+            <p class="lead">
+                一頭買いだからこそ実現する<br>
+                最高峰の熟成和牛体験
+            </p>
+            <p>
+                全国の厳選された牧場から仕入れるA5ランク黒毛和牛を、<br>
+                自社熟成庫で最低21日間じっくりと熟成。<br>
+                旨みを最大限に引き出した極上の一皿を<br>
+                完全個室のプライベート空間でお楽しみください。
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- MENU -->
+<section class="section menu-section centered" id="menu">
+    <div class="section-inner">
+        <span class="section-label">Menu</span>
+        <h2 class="section-title reveal">おすすめメニュー</h2>
+        <p class="section-desc reveal">グランドオープン記念で全品30%OFF。この機会にぜひご賞味ください。</p>
+        <div class="menu-grid">
+            <div class="menu-card reveal">
+                <div class="menu-img">
+                    🥩
+                    <span class="menu-tag">人気 No.1</span>
+                </div>
+                <div class="menu-body">
+                    <h3>特選シャトーブリアン</h3>
+                    <p>A5ランク黒毛和牛のヒレの中心部分のみを使用。とろけるような食感と上品な甘みが特徴の最高級部位です。</p>
+                    <div class="menu-price">
+                        <span class="original">¥5,980</span>
+                        <span class="sale">¥4,186<small>（税込）</small></span>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card reveal">
+                <div class="menu-img">
+                    🍖
+                    <span class="menu-tag">おすすめ</span>
+                </div>
+                <div class="menu-body">
+                    <h3>熟成21日 特上カルビ</h3>
+                    <p>21日間の熟成により旨み成分が凝縮。脂の甘みと赤身の深い味わいが絶妙にマッチした看板メニューです。</p>
+                    <div class="menu-price">
+                        <span class="original">¥2,480</span>
+                        <span class="sale">¥1,736<small>（税込）</small></span>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-card reveal">
+                <div class="menu-img">
+                    🥂
+                    <span class="menu-tag">限定</span>
+                </div>
+                <div class="menu-body">
+                    <h3>オープン記念 極コース</h3>
+                    <p>シャトーブリアン、特上カルビ、上タン塩など全10品に、ソムリエ厳選ワインペアリング2杯付きの特別コースです。</p>
+                    <div class="menu-price">
+                        <span class="original">¥15,000</span>
+                        <span class="sale">¥10,500<small>（税込）</small></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section centered">
+    <div class="section-inner">
+        <span class="section-label">Features</span>
+        <h2 class="section-title reveal">炎-HOMURA-の3つのこだわり</h2>
+        <div class="gold-divider"></div>
+        <div class="features-row">
+            <div class="feat-card reveal">
+                <div class="feat-icon">🐂</div>
+                <h3>一頭買い×自社熟成</h3>
+                <p>市場を通さず産地直送で一頭丸ごと仕入れ。自社熟成庫で最低21日間の低温熟成を施し、旨みを最大限に引き出します。</p>
+            </div>
+            <div class="feat-card reveal">
+                <div class="feat-icon">🔥</div>
+                <h3>炭火×赤外線の二刀流</h3>
+                <p>備長炭と遠赤外線ロースターのハイブリッド焼台を全席に完備。部位ごとに最適な焼き方で、肉の旨みを逃しません。</p>
+            </div>
+            <div class="feat-card reveal">
+                <div class="feat-icon">🚪</div>
+                <h3>全席完全個室</h3>
+                <p>2名様から最大12名様までの完全個室をご用意。接待、デート、ご家族のお祝いなど、大切なシーンにご利用ください。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CAMPAIGN DETAIL -->
+<section class="campaign-detail">
+    <div class="cd-inner">
+        <div class="cd-label">GRAND OPEN CAMPAIGN</div>
+        <h2>グランドオープン記念<br>3大特典</h2>
+        <p class="cd-period">2026年3月1日（日）〜 3月31日（火）</p>
+        <div class="campaign-benefits">
+            <span>🎉 全品30%OFF</span>
+            <span>🍷 ドリンク1杯サービス</span>
+            <span>🎁 次回使える20%OFFクーポン</span>
+        </div>
+        <a href="#reserve" class="btn-white">今すぐ予約する →</a>
+    </div>
+</section>
+
+<!-- SHOP INFO -->
+<section class="section shop-info centered">
+    <div class="section-inner">
+        <span class="section-label">Information</span>
+        <h2 class="section-title reveal">店舗情報</h2>
+        <div class="gold-divider"></div>
+        <table class="info-table reveal">
+            <tr>
+                <th>店名</th>
+                <td>熟成和牛 炎 -HOMURA- 渋谷店</td>
+            </tr>
+            <tr>
+                <th>住所</th>
+                <td>〒150-0000 東京都渋谷区○○1-2-3 ○○ビル B1F</td>
+            </tr>
+            <tr>
+                <th>アクセス</th>
+                <td>JR渋谷駅 ハチ公口 徒歩2分</td>
+            </tr>
+            <tr>
+                <th>営業時間</th>
+                <td>ランチ 11:30〜14:30（L.O. 14:00）<br>ディナー 17:00〜23:00（L.O. 22:00）</td>
+            </tr>
+            <tr>
+                <th>定休日</th>
+                <td>不定休</td>
+            </tr>
+            <tr>
+                <th>席数</th>
+                <td>全48席（完全個室 8室）</td>
+            </tr>
+            <tr>
+                <th>電話</th>
+                <td>03-0000-0000</td>
+            </tr>
+        </table>
+        <div class="map-placeholder reveal">
+            Google Map がここに表示されます
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="section centered">
+    <div class="section-inner">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title reveal">よくあるご質問</h2>
+        <div class="gold-divider"></div>
+        <div class="faq-list reveal">
+            <div class="faq-item">
+                <div class="faq-q">予約なしでも入れますか？</div>
+                <div class="faq-a">空席がございましたらご案内可能ですが、オープン記念期間中は大変混み合うことが予想されます。事前のご予約をおすすめいたします。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">子連れでも大丈夫ですか？</div>
+                <div class="faq-a">はい、お子様も大歓迎です。完全個室ですので、周りを気にせずお食事をお楽しみいただけます。お子様用のお皿やカトラリーもご用意しております。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">キャンペーンの割引は全メニュー対象ですか？</div>
+                <div class="faq-a">はい、フード・ドリンク全メニューが30%OFFの対象です。コースメニューにも適用されますので、大変お得にお楽しみいただけます。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">アレルギー対応は可能ですか？</div>
+                <div class="faq-a">可能です。ご予約時にアレルギー情報をお伝えください。可能な限りメニューを調整して対応いたします。</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="reserve">
+    <div class="section-inner" style="position: relative; z-index: 1;">
+        <span class="section-label">Reservation</span>
+        <h2 class="section-title reveal">ご予約・お問い合わせ</h2>
+        <p class="section-desc reveal" style="color: var(--text-light); margin-left: auto; margin-right: auto;">
+            グランドオープン記念キャンペーンは3月31日まで。<br>
+            お席に限りがございますので、お早めにご予約ください。
+        </p>
+        <div class="final-cta-buttons reveal">
+            <a href="#" class="btn-red-fill">Web予約する →</a>
+            <a href="tel:03-0000-0000" class="btn-gold-outline">☎ 03-0000-0000</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="logo">炎 -HOMURA-</div>
+    <p>熟成和牛専門 焼肉</p>
+    <div class="links">
+        <a href="#">プライバシーポリシー</a>
+        <a href="#">特定商取引法に基づく表記</a>
+    </div>
+    <p>© 2026 HOMURA. All Rights Reserved.</p>
+    <p style="margin-top: 12px; font-size: 11px; opacity: 0.5;">※これはポートフォリオ用のデモサイトです。架空の店舗です。</p>
+</footer>
+
+<script>
+    // Floating CTA
+    const floatingCta = document.getElementById('floatingCta');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 600) {
+            floatingCta.classList.add('visible');
+        } else {
+            floatingCta.classList.remove('visible');
+        }
+    });
+
+    // Scroll reveal
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    revealElements.forEach(el => observer.observe(el));
+
+    // FAQ
+    document.querySelectorAll('.faq-q').forEach(q => {
+        q.addEventListener('click', () => {
+            q.parentElement.classList.toggle('open');
+        });
+    });
+</script>
+
+</body>
+</html>
